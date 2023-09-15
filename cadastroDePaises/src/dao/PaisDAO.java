@@ -21,9 +21,19 @@ public class PaisDAO {
 		listaDePaises = new ArrayList<Paises>();
 	}
 
-	public void adicionarPais(String nome, String capital) {
-		Paises pais = new Paises(nome, capital);
-		listaDePaises.add(pais);
+	public void adicionarPais(Paises paises) {
+		 try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
+	            String sql = "INSERT INTO pais (nome, capital) VALUES (?, ?)";
+	            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+	            preparedStatement.setString(1, paises.getNome());
+	            preparedStatement.setString(2, paises.getCapital());
+	            preparedStatement.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+		
+		}
+		
 	}
 
 	/*
@@ -62,6 +72,46 @@ public class PaisDAO {
 					lista.add(pais);
 				}
 			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return lista;
+	}
+	
+	public ArrayList<Paises> exibirPrimeiroDaLista() {
+		ArrayList<Paises> lista = new ArrayList<>();
+		if(abreConexao()) {
+			try {
+				String sql = "SELECT * FROM pais LIMIT 1";
+				PreparedStatement ps = connection.prepareStatement(sql);
+				ResultSet resultSet = ps.executeQuery();
+				while(resultSet.next()) {
+					String nome = resultSet.getString("nome");
+					String capital = resultSet.getString("capital");
+					Paises pais = new Paises(nome, capital);
+					lista.add(pais);
+				}	
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}
+		return lista;
+	}
+	
+	public ArrayList<Paises> exibirTerceiroDaLista() {
+		ArrayList<Paises> lista = new ArrayList<>();
+		if(abreConexao()) {
+			try {
+				String sql = "SELECT * FROM pais LIMIT 2,1";
+				PreparedStatement ps = connection.prepareStatement(sql);
+				ResultSet resultSet = ps.executeQuery();
+				while(resultSet.next()) {
+					String nome = resultSet.getString("nome");
+					String capital = resultSet.getString("capital");
+					Paises pais = new Paises(nome, capital);
+					lista.add(pais);
+				}	
+			}catch(SQLException e){
 				e.printStackTrace();
 			}
 		}

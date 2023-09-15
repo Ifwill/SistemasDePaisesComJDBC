@@ -29,6 +29,8 @@ public class PaisesView {
 		System.out.println("3-Remover Pais.");
 		System.out.println("4-Limpar lista.");
 		System.out.println("5-teste de conexao");
+		System.out.println("6-Primeiro da lista");
+		System.out.println("7-Terceiro da lista");
 		System.out.println("0-Sair.");
 		System.out.println();
 		System.out.println("Digite sua escolha: ");
@@ -49,6 +51,10 @@ public class PaisesView {
 	public String getCapital() {
 		System.out.println("Digite o Capital: ");
 		return scanner.next();
+	}
+	
+	public void getMensagem() {
+		System.err.println("Erro:");
 	}
 
 }

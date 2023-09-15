@@ -35,6 +35,12 @@ public class PaisesController {
 			case 5:
 				testaConexao();
 				break;
+			case 6:
+				exibirPrimeiroDaLista();
+				break;
+			case 7:
+				exibirTerceiroDaLista();
+				break;
 			}
 
 		} while (op != 0);
@@ -42,7 +48,10 @@ public class PaisesController {
 	}
 
 	public void adicionarPaises() {
-		paisDao.adicionarPais(paisesView.getNome(), paisesView.getCapital());
+		String nome = paisesView.getNome();
+		String capital = paisesView.getCapital();
+		Paises pais = new Paises(nome,capital);
+		paisDao.adicionarPais(pais);
 	}
 
 	public void removerPaises() {
@@ -55,6 +64,16 @@ public class PaisesController {
 
 	public void exibirLista() {
 		ArrayList<Paises> listaDePaises = paisDao.exibirLista();
+		paisesView.exibirPaises(listaDePaises);
+	}
+	
+	public void exibirPrimeiroDaLista() {
+		ArrayList<Paises> listaDePaises = paisDao.exibirPrimeiroDaLista();
+		paisesView.exibirPaises(listaDePaises);
+	}
+	
+	public void exibirTerceiroDaLista() {
+		ArrayList<Paises> listaDePaises = paisDao.exibirTerceiroDaLista();
 		paisesView.exibirPaises(listaDePaises);
 	}
 
